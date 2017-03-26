@@ -67,6 +67,7 @@ class Shelf(models.Model):
 
 class Book(models.Model):
     title = CharField(max_length=200, verbose_name='Tytuł')
+    original_title = CharField(max_length=200, verbose_name='Tytuł oryginału')
     author = CharField(max_length=200, verbose_name='Autor')
     language = ForeignKey(Language, verbose_name='Język')
     year = IntegerField(verbose_name='Rok wydania')
@@ -75,6 +76,7 @@ class Book(models.Model):
     translator = CharField(max_length=50, verbose_name='Tłumacz')
     image = ImageField(upload_to='uploads/', verbose_name='Okładka')
     shelf = ForeignKey(Shelf, verbose_name='Półka', help_text='Na której lerzy książka')
+    dedication = BooleanField(default=False, verbose_name='Dedykacja')
 
     def __str__(self):
         return '\"%s\" %s' % (self.title, self.author)
