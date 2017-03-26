@@ -48,7 +48,7 @@ class Furniture(models.Model):
     class Meta:
         verbose_name = 'Mebel'
         verbose_name_plural = 'Meble'
-        ordering = ['name']
+        ordering = ['room', 'name']
 
 
 class Shelf(models.Model):
@@ -57,19 +57,19 @@ class Shelf(models.Model):
     position = IntegerField()
 
     def __str__(self):
-        return self.name
+        return '%s - %s - %s' % (self.furniture.room.name, self.furniture.name, self.name)
 
     class Meta:
         verbose_name = 'Półka'
         verbose_name_plural = 'Półki'
-        ordering = ['position']
+        ordering = ['furniture', 'position']
 
 
 class Book(models.Model):
     title = CharField(max_length=200, verbose_name='Tytuł')
     author = CharField(max_length=200, verbose_name='Autor')
     language = ForeignKey(Language, verbose_name='Język')
-    year = IntegerField()
+    year = IntegerField(verbose_name='Rok wydania')
     print = ForeignKey(Print, verbose_name='Wydawnictwo')
     isbn = CharField(max_length=20, verbose_name='ISBN')
     translator = CharField(max_length=50, verbose_name='Tłumacz')
