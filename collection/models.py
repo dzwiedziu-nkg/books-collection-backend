@@ -11,6 +11,7 @@ class Language(models.Model):
     class Meta:
         verbose_name = 'Język książki'
         verbose_name_plural = 'Języki książek'
+        ordering = ['name']
 
 
 class Print(models.Model):
@@ -22,6 +23,7 @@ class Print(models.Model):
     class Meta:
         verbose_name = 'Wydawnictwo'
         verbose_name_plural = 'Wydawnictwa'
+        ordering = ['name']
 
 
 class Room(models.Model):
@@ -33,6 +35,7 @@ class Room(models.Model):
     class Meta:
         verbose_name = 'Pokój'
         verbose_name_plural = 'Pokoje'
+        ordering = ['name']
 
 
 class Furniture(models.Model):
@@ -45,11 +48,13 @@ class Furniture(models.Model):
     class Meta:
         verbose_name = 'Mebel'
         verbose_name_plural = 'Meble'
+        ordering = ['name']
 
 
 class Shelf(models.Model):
     name = CharField(max_length=50, verbose_name='Półka')
     furniture = ForeignKey(Furniture, verbose_name='Mebel')
+    position = IntegerField()
 
     def __str__(self):
         return self.name
@@ -57,6 +62,7 @@ class Shelf(models.Model):
     class Meta:
         verbose_name = 'Półka'
         verbose_name_plural = 'Półki'
+        ordering = ['position']
 
 
 class Book(models.Model):
@@ -76,3 +82,4 @@ class Book(models.Model):
     class Meta:
         verbose_name = 'Książka'
         verbose_name_plural = 'Książki'
+        ordering = ['title']

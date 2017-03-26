@@ -2,4 +2,4 @@
 Collection of books
 
 
-pip3 install django djangorestframework markdown django-filter
+pip3 install django djangorestframework markdown django-filter django-nested-admin
