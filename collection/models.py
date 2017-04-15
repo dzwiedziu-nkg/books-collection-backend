@@ -2,6 +2,37 @@ from django.db import models
 from django.db.models import *
 
 
+class Config(models.Model):
+    KEY_VALUES = (
+        ('BRAND_TITLE', 'BRAND_TITLE'),
+    )
+
+    KEY_VALUES_DEFAULTS = (
+        ('BRAND_TITLE', 'Kolekcja książek'),
+    )
+
+    key = CharField(max_length=50, primary_key=True, choices=KEY_VALUES, verbose_name='Opcja')
+    value = CharField(max_length=255, verbose_name='Wartość')
+
+    def __str__(self):
+        return '%s = %s' % (self.key, self.value)
+
+    @staticmethod
+    def init_defaults():
+        for d in Config.KEY_VALUES_DEFAULTS:
+            o = Config.objects.filter(key=d[0])
+            if o.count() == 0:
+                c = Config()
+                c.key = d[0]
+                c.value = d[1]
+                c.save()
+
+    class Meta:
+        verbose_name = 'Opcja'
+        verbose_name_plural = 'Opcje'
+        ordering = ['key']
+
+
 class Language(models.Model):
     name = CharField(max_length=50, verbose_name='Język książki')
 
@@ -28,6 +59,9 @@ class Print(models.Model):
 
 class Room(models.Model):
     name = CharField(max_length=50, verbose_name='Pokój')
+    position = IntegerField()
+    cols = IntegerField(default=2)
+    colspan = IntegerField(default=1)
 
     def __str__(self):
         return self.name
@@ -41,6 +75,9 @@ class Room(models.Model):
 class Furniture(models.Model):
     name = CharField(max_length=50, verbose_name='Mebel')
     room = ForeignKey(Room, verbose_name='Pokój')
+    position = IntegerField()
+    cols = IntegerField(default=4)
+    colspan = IntegerField(default=1)
 
     def __str__(self):
         return self.name
@@ -55,6 +92,8 @@ class Shelf(models.Model):
     name = CharField(max_length=50, verbose_name='Półka')
     furniture = ForeignKey(Furniture, verbose_name='Mebel')
     position = IntegerField()
+    cols = IntegerField(default=4)
+    colspan = IntegerField(default=1)
 
     def __str__(self):
         return '%s - %s - %s' % (self.furniture.room.name, self.furniture.name, self.name)
@@ -77,6 +116,7 @@ class Book(models.Model):
     image = ImageField(upload_to='uploads/', verbose_name='Okładka')
     shelf = ForeignKey(Shelf, verbose_name='Półka', help_text='Na której lerzy książka')
     dedication = BooleanField(default=False, verbose_name='Dedykacja')
+    position = IntegerField()
 
     def __str__(self):
         return '\"%s\" %s' % (self.title, self.author)

@@ -36,6 +36,7 @@ class UserViewSet(viewsets.ModelViewSet):
 # Routers provide an easy way of automatically determining the URL conf.
 router = routers.DefaultRouter()
 router.register(r'users', UserViewSet)
+router.register(r'config', ConfigViewSet)
 router.register(r'rooms', RoomViewSet)
 router.register(r'furniture', FurnitureViewSet)
 router.register(r'shelves', ShelfViewSet)
