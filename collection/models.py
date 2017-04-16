@@ -5,10 +5,12 @@ from django.db.models import *
 class Config(models.Model):
     KEY_VALUES = (
         ('BRAND_TITLE', 'BRAND_TITLE'),
+        ('ROOM_COLS', 'ROOM_COLS')
     )
 
     KEY_VALUES_DEFAULTS = (
         ('BRAND_TITLE', 'Kolekcja książek'),
+        ('ROOM_COLS', '2'),
     )
 
     key = CharField(max_length=50, primary_key=True, choices=KEY_VALUES, verbose_name='Opcja')
