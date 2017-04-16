@@ -3,9 +3,14 @@ from collection.models import *
 
 
 class ConfigSerializer(serializers.ModelSerializer):
+    id = serializers.SerializerMethodField(source='get_id')
+
+    def get_id(self, obj):
+        return obj.key
+
     class Meta:
         model = Config
-        fields = '__all__'
+        fields = ['id', 'value']
 
 
 class RoomSerializer(serializers.ModelSerializer):
