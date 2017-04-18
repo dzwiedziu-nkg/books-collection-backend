@@ -61,12 +61,21 @@ class Print(models.Model):
 
 class Room(models.Model):
     name = CharField(max_length=50, verbose_name='Pokój')
-    position = IntegerField()
+    position = IntegerField(default=0)
     cols = IntegerField(default=2)
     colspan = IntegerField(default=1)
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.pk:
+            max = self.position = Room.objects.all().aggregate(Max('position'))
+            if max and 'position__max' in max:
+                self.position = max['position__max'] + 1
+            else:
+                self.position = 0
+        super(Room, self).save(*args, **kwargs)
 
     class Meta:
         verbose_name = 'Pokój'
@@ -77,7 +86,7 @@ class Room(models.Model):
 class Furniture(models.Model):
     name = CharField(max_length=50, verbose_name='Mebel')
     room = ForeignKey(Room, verbose_name='Pokój')
-    position = IntegerField()
+    position = IntegerField(default=0)
     cols = IntegerField(default=4)
     colspan = IntegerField(default=1)
 
@@ -93,7 +102,7 @@ class Furniture(models.Model):
 class Shelf(models.Model):
     name = CharField(max_length=50, verbose_name='Półka')
     furniture = ForeignKey(Furniture, verbose_name='Mebel')
-    position = IntegerField()
+    position = IntegerField(default=0)
     cols = IntegerField(default=4)
     colspan = IntegerField(default=1)
 
@@ -118,7 +127,7 @@ class Book(models.Model):
     image = ImageField(upload_to='uploads/', verbose_name='Okładka')
     shelf = ForeignKey(Shelf, verbose_name='Półka', help_text='Na której lerzy książka')
     dedication = BooleanField(default=False, verbose_name='Dedykacja')
-    position = IntegerField()
+    position = IntegerField(default=0)
 
     def __str__(self):
         return '\"%s\" %s' % (self.title, self.author)
