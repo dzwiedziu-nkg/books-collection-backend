@@ -48,7 +48,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    #'django.middleware.csrf.CsrfViewMiddleware', #FIXME: auth in SPA client
+    #'django.middleware.csrf.CsrfViewMiddleware', #FIXME: auth in SPA client, TODO: https://github.com/bigsassy/drf-react-redux
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -109,11 +109,11 @@ REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication', #FIXME: auth in SPA client
+        'rest_framework.authentication.TokenAuthentication', #FIXME: auth in SPA client, TODO: https://github.com/bigsassy/drf-react-redux
     ),
     'DEFAULT_PERMISSION_CLASSES': [
         #'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        'rest_framework.permissions.AllowAny' #FIXME: auth in SPA client
+        'rest_framework.permissions.AllowAny' #FIXME: auth in SPA client, TODO: https://github.com/bigsassy/drf-react-redux
     ],
     'DEFAULT_FILTER_BACKENDS': ('django_filters.rest_framework.DjangoFilterBackend', 'rest_framework.filters.SearchFilter')
 }
