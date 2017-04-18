@@ -80,7 +80,7 @@ class Room(models.Model):
     class Meta:
         verbose_name = 'Pokój'
         verbose_name_plural = 'Pokoje'
-        ordering = ['name']
+        ordering = ['position']
 
 
 class Furniture(models.Model):
@@ -96,7 +96,7 @@ class Furniture(models.Model):
     class Meta:
         verbose_name = 'Mebel'
         verbose_name_plural = 'Meble'
-        ordering = ['room', 'name']
+        ordering = ['room', 'position']
 
 
 class Shelf(models.Model):
